@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">BakingApp</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="quantity">Quantity : 500</string>
+    <string name="measure">Measure : TBLSP</string>
+    <string name="ingredient">Ingredient : melted and cooled bittersweet or semisweet chocolate</string>
+
 </resources>

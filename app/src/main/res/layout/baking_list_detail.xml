@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    >
+
+
+    <ImageView
+        android:id="@+id/list_image"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:background="@drawable/cake" />
+
+
+    <TextView
+        android:id="@+id/list_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:text="@string/ingredients"
+        android:textColor="@color/dark_gray"
+        android:textSize="27sp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/list_ingredient"
+            style="@style/ListItem"
+            android:text="@string/ingredient" />
+
+        <TextView
+            android:id="@+id/list_num_description"
+            style="@style/ListItem"
+            android:text="@string/quantity" />
+
+        <TextView
+            android:id="@+id/list_measure"
+            style="@style/ListItem"
+            android:text="@string/measure" />
+
+    </LinearLayout>
+
+    <View style="@style/line_horizontal" />
+
+</LinearLayout>

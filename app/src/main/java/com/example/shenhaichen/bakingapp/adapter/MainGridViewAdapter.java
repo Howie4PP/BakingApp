@@ -12,6 +12,8 @@ import android.widget.ImageView;
 
 import com.example.shenhaichen.bakingapp.R;
 
+import java.util.List;
+
 /**
  * Created by shenhaichen on 07/11/2017.
  */
@@ -20,7 +22,7 @@ public class MainGridViewAdapter extends ArrayAdapter<Integer> {
 
     public static final String TAG = MainGridViewAdapter.class.getSimpleName();
 
-    public MainGridViewAdapter(Activity context, Integer[] pics) {
+    public MainGridViewAdapter(Activity context, List<Integer> pics) {
         super(context, 0,pics);
     }
 
