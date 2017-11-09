@@ -3,7 +3,6 @@ package com.example.shenhaichen.bakingapp.adapter;
 import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,16 +36,19 @@ public class MainGridViewAdapter extends ArrayAdapter<Integer> {
         ViewHolder holder = new ViewHolder();
 
         int imageResource = getItem(position);
-        holder.imageView = (ImageView) convertView.findViewById(R.id.baking_main_image);
-        holder.imageView.setImageResource(imageResource);
 
-        convertView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        holder.imageView = convertView.findViewById(R.id.baking_main_image);
+        holder.imageView.setBackgroundResource(imageResource);
 
-                Log.d(TAG, position+"");
-            }
-        });
+//        convertView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                Intent intent = new Intent(getContext(), BakingDetailActivity.class);
+//                intent.putExtra("image",position);
+//                getContext().startActivity(intent);
+//            }
+//        });
 
         return convertView;
     }
@@ -57,9 +59,6 @@ public class MainGridViewAdapter extends ArrayAdapter<Integer> {
 
     }
 
-//    public interface GridViewPositionInterface{
-//        void click(int position);
-//    }
 
 }
 

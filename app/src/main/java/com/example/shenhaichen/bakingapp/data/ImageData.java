@@ -19,6 +19,5 @@ public class ImageData {
             add(R.drawable.pie);
         }
     };
-
     public static List<Integer> getMain_pics() {return main_pics;}
 }

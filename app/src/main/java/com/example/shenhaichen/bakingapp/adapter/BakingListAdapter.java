@@ -12,9 +12,6 @@ import com.example.shenhaichen.bakingapp.data.ImageData;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 /**
  * Created by shenhaichen on 08/11/2017.
  */
@@ -23,10 +20,11 @@ public class BakingListAdapter extends RecyclerView.Adapter<BakingListAdapter.Vi
 
     private int imageNum = 0;
     private List<Integer> image_list = ImageData.getMain_pics();
+    private List<String> mList;
 
-    public BakingListAdapter(int imageNum) {
+    public BakingListAdapter(int imageNum, List<String> mList) {
       this.imageNum = imageNum;
-
+      this.mList = mList;
     }
 
     @Override
@@ -35,8 +33,6 @@ public class BakingListAdapter extends RecyclerView.Adapter<BakingListAdapter.Vi
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.baking_list_detail,parent,false);
 
-        ButterKnife.bind(view);
-
         return new ViewHolder(view);
     }
 
@@ -44,19 +40,14 @@ public class BakingListAdapter extends RecyclerView.Adapter<BakingListAdapter.Vi
     public void onBindViewHolder(ViewHolder holder, int position) {
 
          if (position == 0) {
-             holder.imageView.setImageResource(image_list.get(imageNum));
+             holder.imageView.setBackgroundResource(image_list.get(imageNum));
              holder.title.setText("Ingredient");
-             holder.ingredient.setText("No. ");
-             holder.numOrDescription.setText("Quantity:");
-             holder.measure.setText("Measure");
+             holder.ingredient.setText(mList.get(0));
 
          } else {
-
              holder.imageView.setVisibility(View.GONE);
-             holder.title.setVisibility(View.GONE);
-             holder.ingredient.setText("Step "+position);
-             holder.numOrDescription.setText("Description:");
-             holder.measure.setVisibility(View.GONE);
+             holder.title.setText("Step "+position);
+             holder.ingredient.setText(mList.get(position));
 
          }
 
@@ -64,23 +55,19 @@ public class BakingListAdapter extends RecyclerView.Adapter<BakingListAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mList.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{
-        @BindView(R.id.list_image)
         ImageView imageView;
-        @BindView(R.id.list_title)
         TextView title;
-        @BindView(R.id.list_num_description)
-        TextView numOrDescription;
-        @BindView(R.id.list_measure)
-        TextView measure;
-        @BindView(R.id.list_ingredient)
         TextView ingredient;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            imageView = itemView.findViewById(R.id.list_image);
+            title = itemView.findViewById(R.id.list_title);
+            ingredient = itemView.findViewById(R.id.list_ingredient);
         }
     }
 
