@@ -4,5 +4,11 @@
     <string name="quantity">Quantity : 500</string>
     <string name="measure">Measure : TBLSP</string>
     <string name="ingredient">Ingredient : melted and cooled bittersweet or semisweet chocolate</string>
+    <string name="pause">Pause</string>
+    <string name="play">Play</string>
+    <string name="restart">Restart</string>
+    <string name="previous">Previous</string>
+    <string name="next">Next</string>
+
 
 </resources>

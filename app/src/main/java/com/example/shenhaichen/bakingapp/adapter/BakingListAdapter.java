@@ -21,10 +21,16 @@ public class BakingListAdapter extends RecyclerView.Adapter<BakingListAdapter.Vi
     private int imageNum = 0;
     private List<Integer> image_list = ImageData.getMain_pics();
     private List<String> mList;
+    private OnItemClickListener onItemClickListener;
+
 
     public BakingListAdapter(int imageNum, List<String> mList) {
       this.imageNum = imageNum;
       this.mList = mList;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 
     @Override
@@ -58,17 +64,30 @@ public class BakingListAdapter extends RecyclerView.Adapter<BakingListAdapter.Vi
         return mList.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         ImageView imageView;
         TextView title;
         TextView ingredient;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
             imageView = itemView.findViewById(R.id.list_image);
             title = itemView.findViewById(R.id.list_title);
             ingredient = itemView.findViewById(R.id.list_ingredient);
         }
+
+        @Override
+        public void onClick(View v) {
+           if (onItemClickListener != null){
+               onItemClickListener.click(getLayoutPosition());
+           }
+        }
+    }
+
+    public interface OnItemClickListener{
+        void click(int position);
     }
 
 

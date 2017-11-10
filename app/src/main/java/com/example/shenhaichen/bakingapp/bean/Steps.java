@@ -11,6 +11,9 @@ public class Steps {
     private String videoURL;
     private String thumbnailURL;
 
+    public Steps() {
+    }
+
     public int getId() {
         return id;
     }
