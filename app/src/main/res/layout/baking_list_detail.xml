@@ -28,7 +28,7 @@
     <TextView
         android:id="@+id/list_ingredient"
         style="@style/ListItem"
-        android:layout_marginLeft="15dp"
+        android:layout_marginLeft="18dp"
         android:text="@string/ingredient" />
 
 

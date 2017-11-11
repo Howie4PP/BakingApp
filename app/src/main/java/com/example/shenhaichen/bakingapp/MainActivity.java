@@ -44,6 +44,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        if(findViewById(R.id.baking_main_grid)!= null){
+            gridView.setNumColumns(GridView.AUTO_FIT);
+        }
+
         MainGridViewAdapter adapter = new MainGridViewAdapter(this, ImageData.getMain_pics());
         gridView.setAdapter(adapter);
 

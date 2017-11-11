@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:textSize="20sp"
+    android:textSize="23sp"
+    android:layout_margin="10dp"
     android:id="@+id/description_text_view"
     >
 

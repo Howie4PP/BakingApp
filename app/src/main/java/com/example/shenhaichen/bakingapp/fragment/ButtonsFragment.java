@@ -19,33 +19,48 @@ public class ButtonsFragment extends Fragment implements View.OnClickListener {
     public Button btn_previous;
 
     public Button btn_next;
+    private OnButtonClickListener onButtonClickListner;
+//    private String steps_id = null;
+//    public static final String STEPS_ID = "steps_id";
 
     public ButtonsFragment() {
     }
 
+    public void setOnButtonClickListner(OnButtonClickListener onButtonClickListener) {
+        this.onButtonClickListner = onButtonClickListener;
+    }
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.button_layout, container, false);
-        btn_next = (Button) rootView.findViewById(R.id.next_button);
-        btn_previous = (Button) rootView.findViewById(R.id.previous_button);
+//        if(savedInstanceState != null) {
+//            steps_id = savedInstanceState.getString(STEPS_ID);
+//        }
 
-//        btn_next.setOnClickListener(this);
-//        btn_previous.setOnClickListener(this);
+        View rootView = inflater.inflate(R.layout.button_layout, container, false);
+        btn_next = rootView.findViewById(R.id.next_button);
+        btn_previous = rootView.findViewById(R.id.previous_button);
+
+        btn_next.setOnClickListener(this);
+        btn_previous.setOnClickListener(this);
 
         return rootView;
     }
 
     @Override
     public void onClick(View v) {
-
+          if (onButtonClickListner != null){
+              onButtonClickListner.buttonClick(v);
+          }
     }
 
-    private void nextOrPreviousMedia() {
-//        mExoPlayer.stop();
-//        Intent nextQuestionIntent = new Intent(QuizActivity.this, QuizActivity.class);
-//        nextQuestionIntent.putExtra(REMAINING_SONGS_KEY, mRemainingSampleIDs);
-//        finish();
-//        startActivity(nextQuestionIntent);
+
+//    @Override
+//    public void onSaveInstanceState(Bundle currentState) {
+//        currentState.putString(STEPS_ID, steps_id);
+//    }
+
+    public interface OnButtonClickListener {
+        void buttonClick(View v);
     }
+
 }

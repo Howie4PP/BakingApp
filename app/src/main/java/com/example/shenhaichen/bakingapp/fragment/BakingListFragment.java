@@ -1,5 +1,6 @@
 package com.example.shenhaichen.bakingapp.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.shenhaichen.bakingapp.BakingDetailActivity;
 import com.example.shenhaichen.bakingapp.R;
 import com.example.shenhaichen.bakingapp.StepsDetailActivity;
 import com.example.shenhaichen.bakingapp.adapter.BakingListAdapter;
@@ -26,7 +28,7 @@ import java.util.List;
  * Created by shenhaichen on 08/11/2017.
  */
 
-public class BakingListFragment extends Fragment implements BakingListAdapter.OnItemClickListener{
+public class BakingListFragment extends Fragment implements BakingListAdapter.OnItemClickListener {
 
     List<String> mlist = new ArrayList<>();
     List<Integer> stepsID_list = new ArrayList<>();
@@ -35,6 +37,20 @@ public class BakingListFragment extends Fragment implements BakingListAdapter.On
     public static final String TAG = BakingListFragment.class.getSimpleName();
 
     private Steps steps;
+
+    private OnIDSelectedListener idSelectedListener;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        // 确保主activity已经实现这个接口，不然将会报错
+        try {
+            idSelectedListener = (OnIDSelectedListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement OnImageClickListener");
+        }
+    }
 
     public BakingListFragment() {
 
@@ -69,6 +85,7 @@ public class BakingListFragment extends Fragment implements BakingListAdapter.On
 
     /**
      * 获得所需的ingredients信息
+     *
      * @param sb
      */
     private void getIngredients(StringBuilder sb) {
@@ -96,7 +113,7 @@ public class BakingListFragment extends Fragment implements BakingListAdapter.On
     /**
      * 获得所需的steps 信息
      */
-    private void getSteps(){
+    private void getSteps() {
         //查询所需的URL以及Description
         Cursor steps_cursor = getContext().getContentResolver().query(TaskContract.TaskEntry.STEPS_CONTENT_URI,
                 null, "baking_id = ?",
@@ -116,18 +133,32 @@ public class BakingListFragment extends Fragment implements BakingListAdapter.On
     public void click(int position) {
 
         // position 减去1，是因为在recycleview中，steps的所有信息是从position 1 开始显示的
-        position -= 1;
+        if (position != 0) {
+            position -= 1;
 
-//        Log.d(TAG, "position" + position);
+            int id = stepsID_list.get(position);
+            int firstStepsId = stepsID_list.get(0);
+            int lastStepsId = stepsID_list.get(stepsID_list.size() - 1);
 
-//        Log.d(TAG, "ID" + stepsID_list.get(position));
+            if (BakingDetailActivity.TWOPANE) {
+                idSelectedListener.onIdSelected(id, firstStepsId, lastStepsId);
+            } else {
+                toNextActivity(id, firstStepsId, lastStepsId);
+            }
+        }
+    }
 
-        String id = String.valueOf(stepsID_list.get(position));
 
-//        Log.d(TAG,"ID" +id);
+    private void toNextActivity(int id, int firstStepsId, int lastStepsId) {
 
         Intent intent = new Intent(getContext(), StepsDetailActivity.class);
-        intent.putExtra(TaskContract.STEPS_ID,id);
+        intent.putExtra(TaskContract.STEPS_ID, id);
+        intent.putExtra(TaskContract.LAST_STEPS_ID, lastStepsId);
+        intent.putExtra(TaskContract.FIRST_STEPS_ID, firstStepsId);
         startActivity(intent);
+    }
+
+    public interface OnIDSelectedListener {
+        void onIdSelected(int id, int firstId, int lastId);
     }
 }

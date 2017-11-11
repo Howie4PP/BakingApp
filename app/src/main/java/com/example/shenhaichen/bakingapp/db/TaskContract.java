@@ -11,6 +11,8 @@ public class TaskContract {
 
     public static final String IMGAENUM = "image_number";
     public static final String STEPS_ID = "stepId";
+    public static final String LAST_STEPS_ID = "last_stepId";
+    public static final String FIRST_STEPS_ID = "first_stepId";
     // The authority, which is how your code knows which Content Provider to access
     public static final String AUTHORITY = "com.example.shenhaichen.bakingapp";
 

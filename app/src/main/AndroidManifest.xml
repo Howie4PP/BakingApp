@@ -31,7 +31,8 @@
             android:authorities="com.example.shenhaichen.bakingapp"
             android:exported="false" />
 
-        <activity android:name=".StepsDetailActivity"
+        <activity
+            android:name=".StepsDetailActivity"
             android:parentActivityName=".BakingDetailActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -43,7 +44,15 @@
                 <action android:name="android.intent.action.MEDIA_BUTTON" />
             </intent-filter>
         </receiver>
+        <receiver android:name=".BakingWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
 
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/baking_widget_provider_info" />
+        </receiver>
     </application>
 
 </manifest>

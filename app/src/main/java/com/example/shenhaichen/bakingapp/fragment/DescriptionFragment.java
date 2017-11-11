@@ -18,6 +18,8 @@ public class DescriptionFragment extends Fragment {
 
 
     public TextView textView;
+    public static final String DESCRIPTION_INDEX = "des_index";
+    private String description = null;
 
     public DescriptionFragment() {
     }
@@ -27,16 +29,25 @@ public class DescriptionFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        if(savedInstanceState != null) {
+            description = savedInstanceState.getString(DESCRIPTION_INDEX);
+        }
+
         View rootView = inflater.inflate(R.layout.description_layout, container, false );
-        textView = (TextView)rootView.findViewById(R.id.description_text_view);
-         textView.setText("dfsdfsfadffffffffffffffffff");
+        textView = rootView.findViewById(R.id.description_text_view);
+        textView.setText(description);
         return rootView;
     }
 
     public void setTextForView(String description){
 
-        textView.setText("fsdffffffffffffffffffffffff");
+        this.description = description;
 
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle currentState) {
+        currentState.putString(DESCRIPTION_INDEX, description);
     }
 
 }

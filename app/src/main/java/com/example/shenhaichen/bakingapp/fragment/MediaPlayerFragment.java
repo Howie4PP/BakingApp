@@ -2,7 +2,6 @@ package com.example.shenhaichen.bakingapp.fragment;
 
 
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -14,13 +13,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.media.session.MediaButtonReceiver;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
-import android.support.v7.app.NotificationCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.shenhaichen.bakingapp.R;
-import com.example.shenhaichen.bakingapp.StepsDetailActivity;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayer;
@@ -39,8 +36,6 @@ import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
-import static android.content.Context.NOTIFICATION_SERVICE;
-
 /**
  * Created by shenhaichen on 10/11/2017.
  */
@@ -51,10 +46,12 @@ public class MediaPlayerFragment extends Fragment implements ExoPlayer.EventList
     public SimpleExoPlayerView mPlayerView;
     private SimpleExoPlayer mExoPlayer;
     private static MediaSessionCompat mMediaSession;
+
+
     private PlaybackStateCompat.Builder mStateBuilder;
     private NotificationManager mNotificationManager;
     private String url;
-    public static final String LIST_INDEX = "list_index";
+    public static final String URL_INDEX = "url_index";
     public static final String TAG = MediaPlayerFragment.class.getSimpleName();
 
     public MediaPlayerFragment() {
@@ -73,19 +70,22 @@ public class MediaPlayerFragment extends Fragment implements ExoPlayer.EventList
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
         if(savedInstanceState != null) {
-            url = savedInstanceState.getString(LIST_INDEX);
+            url = savedInstanceState.getString(URL_INDEX);
         }
-
 
         View rootView = inflater.inflate(R.layout.player_layout, container, false);
 
-        mPlayerView = (SimpleExoPlayerView)rootView.findViewById(R.id.media_player_view);
+        mPlayerView = rootView.findViewById(R.id.media_player_view);
+
         // 如果没有视频资源，就显示一个问号图片
         mPlayerView.setDefaultArtwork(BitmapFactory.decodeResource
                 (getResources(), R.drawable.question_mark));
 
         initializeMediaSession();
-        Uri uri = Uri.parse(url);
+        Uri uri = null;
+        if (url != null) {
+            uri = Uri.parse(url);
+        }
         initializePlayer(uri);
 
         return rootView;
@@ -124,54 +124,6 @@ public class MediaPlayerFragment extends Fragment implements ExoPlayer.EventList
     }
 
     /**
-     * Shows Media Style notification, with actions that depend on the current MediaSession
-     * PlaybackState.
-     * @param state The PlaybackState of the MediaSession.
-     */
-    private void showNotification(PlaybackStateCompat state) {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity());
-
-        int icon;
-        String play_pause;
-        if(state.getState() == PlaybackStateCompat.STATE_PLAYING){
-            icon = R.drawable.exo_controls_pause;
-            play_pause = getString(R.string.pause);
-        } else {
-            icon = R.drawable.exo_controls_play;
-            play_pause = getString(R.string.play);
-        }
-
-
-        NotificationCompat.Action playPauseAction = new NotificationCompat.Action(
-                icon, play_pause,
-                MediaButtonReceiver.buildMediaButtonPendingIntent(getActivity(),
-                        PlaybackStateCompat.ACTION_PLAY_PAUSE));
-
-        NotificationCompat.Action restartAction = new android.support.v4.app.NotificationCompat
-                .Action(R.drawable.exo_controls_previous, getString(R.string.restart),
-                MediaButtonReceiver.buildMediaButtonPendingIntent
-                        (getContext(), PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS));
-
-        PendingIntent contentPendingIntent = PendingIntent.getActivity
-                (getContext(), 0, new Intent(getActivity(), StepsDetailActivity.class), 0);
-
-//        builder.setContentTitle(getString(R.string.guess))
-//                .setContentText(getString(R.string.notification_text))
-//                .setContentIntent(contentPendingIntent)
-//                .setSmallIcon(R.drawable.ic_music_note)
-//                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-//                .addAction(restartAction)
-//                .addAction(playPauseAction)
-//                .setStyle(new NotificationCompat.MediaStyle()
-//                        .setMediaSession(mMediaSession.getSessionToken())
-//                        .setShowActionsInCompactView(0,1));
-
-
-        mNotificationManager = (NotificationManager) getContext().getSystemService(NOTIFICATION_SERVICE);
-        mNotificationManager.notify(0, builder.build());
-    }
-
-    /**
      * Initialize ExoPlayer.
      * @param
      */
@@ -205,7 +157,7 @@ public class MediaPlayerFragment extends Fragment implements ExoPlayer.EventList
      * Release ExoPlayer.
      */
     private void releasePlayer() {
-        mNotificationManager.cancelAll();
+//        mNotificationManager.cancelAll();
         mExoPlayer.stop();
         mExoPlayer.release();
         mExoPlayer = null;
@@ -294,6 +246,6 @@ public class MediaPlayerFragment extends Fragment implements ExoPlayer.EventList
 
     @Override
     public void onSaveInstanceState(Bundle currentState) {
-        currentState.putString(LIST_INDEX, url);
+        currentState.putString(URL_INDEX, url);
     }
 }
