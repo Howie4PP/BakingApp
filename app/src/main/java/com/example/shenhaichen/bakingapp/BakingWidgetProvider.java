@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
+import com.example.shenhaichen.bakingapp.widget.GridWidgetService;
+
 /**
  * Implementation of App Widget functionality.
  */
@@ -26,6 +28,26 @@ public class BakingWidgetProvider extends AppWidgetProvider {
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
+    }
+
+    /**
+     * Creates and returns the RemoteViews to be displayed in the GridView mode widget
+     *
+     * @param context The context
+     * @return The RemoteViews for the GridView mode widget
+     */
+    private static RemoteViews getGardenGridRemoteView(Context context) {
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_grid_view);
+        // Set the GridWidgetService intent to act as the adapter for the GridView
+        Intent intent = new Intent(context, GridWidgetService.class);
+        views.setRemoteAdapter(R.id.widget_grid_view, intent);
+        // Set the PlantDetailActivity intent to launch when clicked
+        Intent appIntent = new Intent(context, BakingDetailActivity.class);
+        PendingIntent appPendingIntent = PendingIntent.getActivity(context, 0, appIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        views.setPendingIntentTemplate(R.id.widget_grid_view, appPendingIntent);
+        // Handle empty gardens
+        views.setEmptyView(R.id.widget_grid_view, R.id.empty_view);
+        return views;
     }
 
     @Override
