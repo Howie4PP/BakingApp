@@ -6,9 +6,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/small_pie"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/small_pie"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
@@ -54,8 +54,15 @@
                 android:resource="@xml/baking_widget_provider_info" />
         </receiver>
 
-        <service android:name=".widget.GridWidgetService"
+        <service
+            android:name=".widget.GridWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
+
+        <activity android:name=".widget.WidgetConfigurationActivity">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

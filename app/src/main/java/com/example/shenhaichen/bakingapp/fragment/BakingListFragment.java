@@ -45,7 +45,9 @@ public class BakingListFragment extends Fragment implements BakingListAdapter.On
         super.onAttach(context);
         // 确保主activity已经实现这个接口，不然将会报错
         try {
-            idSelectedListener = (OnIDSelectedListener) context;
+            if (context instanceof OnIDSelectedListener) {
+                idSelectedListener = (OnIDSelectedListener) context;
+            }
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
                     + " must implement OnImageClickListener");
@@ -141,7 +143,9 @@ public class BakingListFragment extends Fragment implements BakingListAdapter.On
             int lastStepsId = stepsID_list.get(stepsID_list.size() - 1);
 
             if (BakingDetailActivity.TWOPANE) {
-                idSelectedListener.onIdSelected(id, firstStepsId, lastStepsId);
+                if (idSelectedListener != null) {
+                    idSelectedListener.onIdSelected(id, firstStepsId, lastStepsId);
+                }
             } else {
                 toNextActivity(id, firstStepsId, lastStepsId);
             }

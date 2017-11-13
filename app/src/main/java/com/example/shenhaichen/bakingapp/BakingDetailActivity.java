@@ -119,7 +119,7 @@ public class BakingDetailActivity extends AppCompatActivity implements BakingLis
 
 
     /**
-     * 准备一个steps对象，准备通过intent传送
+     * 准备一个steps对象，得到相应数据
      */
     public Steps getStepsValues() {
 

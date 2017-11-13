@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.shenhaichen.bakingapp.widget.WidgetConfigurationActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="18sp"
+        android:text="@string/hint" />
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="5dp"
+        android:columnCount="2"
+        android:rowCount="2">
+
+        <ImageView
+            style="@style/widget_image"
+            android:id="@+id/widget_small_pie"
+            android:src="@drawable/small_pie" />
+
+        <ImageView
+            style="@style/widget_image"
+            android:id="@+id/widget_small_brownies"
+            android:src="@drawable/small_brownies" />
+
+        <ImageView
+            style="@style/widget_image"
+            android:id="@+id/widget_small_baking"
+            android:src="@drawable/small_baking" />
+
+        <ImageView
+            style="@style/widget_image"
+            android:id="@+id/widget_small_cheesecake"
+            android:src="@drawable/small_cheesecake" />
+
+
+    </GridLayout>
+</LinearLayout>

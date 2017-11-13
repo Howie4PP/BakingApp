@@ -10,7 +10,11 @@ import java.util.Map;
  * Created by shenhaichen on 09/11/2017.
  */
 
-public class SPUtils {
+// final 防止继承
+public final class SPUtils {
+    //private声明构造函数，防止初始化实例，避免不必要的资源浪费
+    private SPUtils() {
+    }
 
     /**
      * 保存在手机里的SP文件名

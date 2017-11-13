@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appwidget-provider
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:configure="com.example.shenhaichen.bakingapp.widget.WidgetConfigurationActivity"
     android:initialLayout="@layout/baking_widget_provider"
-    android:minHeight="40dp"
-    android:minWidth="40dp"
+    android:minHeight="50dp"
+    android:minWidth="60dp"
     android:previewImage="@drawable/launch_icon"
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="18000000"
